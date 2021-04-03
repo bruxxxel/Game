@@ -1,0 +1,7 @@
+{
+    "c-cpp-compile-run.c-flags": "-Wall -Wextra -lallegro -lallegro_primitives",
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "files.associations": {
+        "allegro5.h": "c"
+    }
+}

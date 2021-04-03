@@ -21,9 +21,7 @@ int main () {
 		ALLEGRO_AUDIO_STREAM *soundtrack = NULL;
 		ALLEGRO_MIXER *mixer = NULL;
 		ALLEGRO_VOICE *voice = NULL;
-		ALLEGRO_KEYBOARD *al_get_keyboard = NULL;
 		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-		ALLEGRO_EVENT_SOURCE *kbevent = NULL;
 		ALLEGRO_EVENT ev;
 
 		{//	Bibliotecas
@@ -51,23 +49,23 @@ int main () {
 
 		{//	Instalações
 				
-			if (!al_install_audio) {
+			if (!al_install_audio()) {
 				printf ("Audio cannot be installed. Check your drivers.");
 				return 1;
 			}
 
-			if (!al_install_keyboard) {
+			if (!al_install_keyboard()) {
 				printf ("Keyboard cannot be installed. Check your drivers.");
 				return 1;
 			}
 
-			if (!al_install_mouse) {
+			if (!al_install_mouse()) {
 				printf ("Mouse cannot be installed. Check your drivers.");
 				return 1;
 			}
 		}
 
-		{//	Criação dos componentes
+		{//	Criação dos coisos
 		
 			display = al_create_display(width, height);
 
@@ -76,7 +74,7 @@ int main () {
 				event_queue = al_create_event_queue();
 
 				al_register_event_source(event_queue, al_get_display_event_source(display));
-				//al_register_event_source(event_queue, al_get_keyboard_event_source);
+				al_register_event_source(event_queue, al_get_keyboard_event_source());
 			}
 		}
 

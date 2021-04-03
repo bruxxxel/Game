@@ -31,24 +31,24 @@ int main () {
 				return 1;
 			}
 
-			if (!al_init_primitives_addon) {
+			if (!al_init_primitives_addon()) {
 				printf ("\nThe allegro_primitives library is missing.");
 				return 1;
 			}
 
-			if (!al_init_image_addon) {
+			if (!al_init_image_addon()) {
 				printf ("\nThe allegro_image library is missing.");
 				return 1;
 			}
 
-			if (!al_init_acodec_addon) {
+			if (!al_init_acodec_addon()) {
 				printf ("\nThe allegro_acodec library is missing.");
 				return 1;
 			}
 		}
 
 		{//	Instalações
-				
+
 			if (!al_install_audio()) {
 				printf ("Audio cannot be installed. Check your drivers.");
 				return 1;
@@ -82,13 +82,9 @@ int main () {
 				mixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
 				voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
 				soundtrack = al_load_audio_stream("./Assets/Audio/Soundtrack.ogg",4,44800);
-
-					if (!soundtrack) {				//Debug
-						printf ("audio fail\n\n");
-					}
-
-				//al_set_audio_stream_playmode(soundtrack, ALLEGRO_PLAYMODE_LOOP);
-				//al_attach_audio_stream_to_mixer(soundtrack, mixer);
+				
+				al_set_audio_stream_playmode(soundtrack, ALLEGRO_PLAYMODE_LOOP);
+				al_attach_audio_stream_to_mixer(soundtrack, mixer);
 				al_attach_mixer_to_voice(mixer, voice);
 			}
 

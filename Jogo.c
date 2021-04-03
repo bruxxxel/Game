@@ -21,8 +21,10 @@ int main () {
 		ALLEGRO_AUDIO_STREAM *soundtrack = NULL;
 		ALLEGRO_MIXER *mixer = NULL;
 		ALLEGRO_VOICE *voice = NULL;
+		ALLEGRO_KEYBOARD *al_get_keyboard = NULL;
 		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-		ALLEGRO_EVENT event;
+		ALLEGRO_EVENT_SOURCE *kbevent = NULL;
+		ALLEGRO_EVENT ev;
 
 		{//	Bibliotecas
 
@@ -65,14 +67,17 @@ int main () {
 			}
 		}
 
-		display = al_create_display (width, height);
+		{//	Criação dos componentes
+		
+			display = al_create_display(width, height);
 
-		{// Criação da fila de eventos
+			{// Criação da fila de eventos
 
-			event_queue = al_create_event_queue();
+				event_queue = al_create_event_queue();
 
-			al_register_event_source(event_queue, al_get_display_event_source(display));
-			//al_register_event_source(event_queue, al_get_keyboard_event_source());
+				al_register_event_source(event_queue, al_get_display_event_source(display));
+				//al_register_event_source(event_queue, al_get_keyboard_event_source);
+			}
 		}
 
 		{//	Funções DEBUG

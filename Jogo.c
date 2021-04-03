@@ -11,7 +11,7 @@ void terminate (ALLEGRO_DISPLAY *display) {
 	al_uninstall_mouse;
 }
 
-void main () {
+int main () {
 
 	//	Início do programa
 
@@ -23,8 +23,6 @@ void main () {
 		ALLEGRO_VOICE *voice = NULL;
 		ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 		ALLEGRO_EVENT event;
-
-		display = al_create_display (width, height);
 
 		{//	Bibliotecas
 
@@ -67,14 +65,14 @@ void main () {
 			}
 		}
 
+		display = al_create_display (width, height);
+
 		{// Criação da fila de eventos
 
 			event_queue = al_create_event_queue();
 
 			al_register_event_source(event_queue, al_get_display_event_source(display));
 			//al_register_event_source(event_queue, al_get_keyboard_event_source());
-			//al_register_event_source(event_queue, al_get_mouse_event_source);
-			//al_register_event_source(event_queue, al_get_timer_event_source);
 		}
 
 		{//	Funções DEBUG

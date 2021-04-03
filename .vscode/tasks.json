@@ -7,8 +7,14 @@
             "args": [
                 "-g",
                 "${file}",
+                "AllegroHeader.h",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/${fileBasenameNoExtension}",
+                "-lallegro",
+                "-lallegro_primitives",
+                "-lallegro_image",
+                "-lallegro_acodec",
+                "-lallegro_audio",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

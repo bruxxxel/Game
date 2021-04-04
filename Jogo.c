@@ -39,11 +39,9 @@ int main () {
 			}
 		}
 
-		{
-			int porracaraio;
-		}
-
-	sleep (3);
 	TERMINATE
+    #ifdef DEBUG
+       	sleep (3);
+	#endif
 	return 0;
 }

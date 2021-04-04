@@ -2,6 +2,7 @@
     "c-cpp-compile-run.c-flags": "AllegroHeader.h -Wall -Wextra -lallegro -lallegro_primitives -lallegro_image -lallegro_acodec -lallegro_audio",
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.associations": {
-        "allegro5.h": "c"
+        "allegro5.h": "c",
+        "allegroheader.h": "c"
     }
 }

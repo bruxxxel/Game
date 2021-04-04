@@ -1,6 +1,6 @@
 //	Definições
 	#define DEBUG
-	#include "AllegroHeader.h"
+	#include "../Libs/AllegroHeader.h"
 
 void terminate (ALLEGRO_DISPLAY *display) {
 

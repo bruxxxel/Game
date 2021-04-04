@@ -6,4 +6,3 @@
                     ALLEGRO_VOICE *voice = NULL; \
                     ALLEGRO_EVENT_QUEUE *event_queue = NULL; \
                     ALLEGRO_EVENT ev;
-                    

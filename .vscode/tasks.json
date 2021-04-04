@@ -8,6 +8,8 @@
                 "-g",
                 "${file}",
                 "Libs/AllegroHeader.h",
+                "Libs/Macros.h",
+                "Libs/Variables.h",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
                 "-lallegro",

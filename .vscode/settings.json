@@ -1,10 +1,12 @@
 {
-    "c-cpp-compile-run.c-flags": "Libs/AllegroHeader.h Libs/Macros.h Libs/Variables.h -Wall -Wextra -lallegro -lallegro_primitives -lallegro_image -lallegro_acodec -lallegro_audio",
+    "c-cpp-compile-run.c-flags": "Libs/AllegroHeader.h -Wall -Wextra -lallegro -lallegro_primitives -lallegro_image -lallegro_acodec -lallegro_audio",
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "files.associations": {
         "allegro5.h": "c",
         "allegroheader.h": "c",
         "macros.h": "c",
-        "variables.h": "c"
+        "variables.h": "c",
+        "allegro_image.h": "c",
+        "allegro_audio.h": "c"
     }
 }

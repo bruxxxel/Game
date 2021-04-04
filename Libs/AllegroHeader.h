@@ -15,3 +15,8 @@
 		#include <allegro5/allegro_acodec.h>
 
 	//  Outros
+		#include "Macros.h"
+		#include "Variables.h"
+		#define OSTFILE	"./Assets/Audio/Soundtrack.ogg"
+
+//  End of File

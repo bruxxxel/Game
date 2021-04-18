@@ -5,7 +5,7 @@
 	#include "Libs/Macros.h"
 	#define DEBUG
 	#define PLACEHOLDER
-	#define MUTE
+	//#define MUTE
 
 int main () {
 

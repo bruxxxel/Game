@@ -1,12 +1,17 @@
 {
-    "c-cpp-compile-run.c-flags": "Libs/AllegroHeader.h -Wall -Wextra -lallegro -lallegro_primitives -lallegro_image -lallegro_acodec -lallegro_audio",
-    "C_Cpp.intelliSenseEngineFallback": "Enabled",
-    "files.associations": {
-        "allegro5.h": "c",
-        "allegroheader.h": "c",
-        "macros.h": "c",
-        "variables.h": "c",
-        "allegro_image.h": "c",
-        "allegro_audio.h": "c"
-    }
+	"c-cpp-compile-run.c-flags": "Libs/AllegroHeader.h -Wall -Wextra -lallegro -lallegro_primitives -lallegro_image -lallegro_acodec -lallegro_audio -lallegro_font -lallegro_ttf",
+	"C_Cpp.intelliSenseEngineFallback": "Enabled",
+	"files.associations": {
+		"allegro5.h": "c",
+		"allegroheader.h": "c",
+		"macros.h": "c",
+		"variables.h": "c",
+		"allegro_image.h": "c",
+		"allegro_audio.h": "c",
+		"allegro_acodec.h": "c",
+		"allegro_font.h": "c",
+		"allegro_tts.h": "c",
+		"allegro_ttf.h": "c",
+		"*.ttf": "c"
+	}
 }

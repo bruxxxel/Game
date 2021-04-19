@@ -55,8 +55,11 @@ int install (void) {
 
 void play_animation (int width, int height, ALLEGRO_BITMAP *choraoirl) {
 	al_clear_to_color(al_map_rgb(0, 0, 0));
-	for (size_t i = 0; i < width; i+=1) {
-		al_draw_scaled_bitmap(choraoirl,0,0,al_get_bitmap_width(choraoirl),al_get_bitmap_height(choraoirl),0+i,0,height/4+i/10,height/2+i/2,0);
+	int img_width = al_get_bitmap_width(choraoirl);
+	int img_height = al_get_bitmap_height(choraoirl);
+	for (size_t i = 0; i < width-img_width; i++) {
+		al_draw_scaled_bitmap(choraoirl,0,0,img_width,img_height,0+i,height/10,height/4+i/5,height/2+i/2,0);
+		al_draw_scaled_bitmap(choraoirl,0,0,img_width,img_height,width-(10*img_width/21)-i,height/10,height/4+i/5,height/2+i/2,ALLEGRO_FLIP_HORIZONTAL);
 		al_flip_display();
 		if (i >= width) {
 			break;
@@ -122,4 +125,3 @@ void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT
 		//al_draw_text(menufont,al_map_rgb(255,255,255),2*width/3+width/30,2*height/3+height/80,ALLEGRO_ALIGN_CENTER,"Close");
 	}
 }
-

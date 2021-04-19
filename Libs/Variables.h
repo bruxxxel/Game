@@ -15,6 +15,7 @@
 					ALLEGRO_BITMAP *menu_background = al_load_bitmap("Assets/Images/Background.bmp"); \
 					\
 					ALLEGRO_MOUSE_STATE mouse_state; \
+					ALLEGRO_KEYBOARD_STATE keyboard_state; \
 					\
 					ALLEGRO_TIMER *timer = NULL;
 					

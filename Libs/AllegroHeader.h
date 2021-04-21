@@ -19,7 +19,8 @@
 		#include <allegro5/allegro_acodec.h>
 
 	//  Outros
-		#define OSTFILE		"./Assets/Audio/Soundtrack.ogg"
-		//#define FONTFILE	"./Assets/Fonts/Minecraft.ttf"
+		#define OSTFILE	"./Assets/Audio/Soundtrack.ogg"
+		#define NOSOUND "./Assets/Audio/NoAudio.ogg"
+		typedef long double value;
 
 //  End of File

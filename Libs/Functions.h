@@ -76,20 +76,14 @@ void draw_menu_boxes (int width, int height) {
 	al_draw_rectangle(2*width/10-width/20,5*height/10,5*width/10-width/20,6*height/10,al_map_rgb(255,0,255),1);	//	Play
 	al_draw_rectangle(8*width/10+width/20,5*height/10,5*width/10+width/20,6*height/10,al_map_rgb(255,0,255),1);	//	Change Character
 
-	{//	Botões inferiores (desativados)
-		//	Caixas das opções inferiores
-		/*al_draw_rectangle(2*width/10-width/20,7*height/10-height/20,5*width/10-width/20,8*height/10-height/20,al_map_rgb(255,0,255),1);	//	Replay Introduction
-		al_draw_rectangle(8*width/10+width/20,7*height/10-height/20,5*width/10+width/20,8*height/10-height/20,al_map_rgb(255,0,255),1);	//	Close*/
-	}
-
 	//	Caixa das informações do jogo
-	al_draw_rectangle(5,height-5,width/2,height-20,al_map_rgb(255,0,255),1);
+	al_draw_rectangle(5,height-5,width/2,height-20,al_map_rgb(255,0,255),1);			//	Info
 
 	//	Caixa da seleção de Som
-	al_draw_rectangle(width-5,5,width-45,45,al_map_rgb(255,0,255),1);		//	Sound
+	al_draw_rectangle(width-width/10,0,width-width/30,height/6,al_map_rgb(255,0,255),1);//	Sound
 }
 
-void draw_menu_images (int width, int height, ALLEGRO_BITMAP *background, ALLEGRO_BITMAP *menu_block) {
+void draw_menu_images (int width, int height, ALLEGRO_BITMAP *background, ALLEGRO_BITMAP *menu_block, ALLEGRO_BITMAP *guita) {
 	
 	//	Fundo
 	al_draw_scaled_bitmap(background,0,0,al_get_bitmap_width(background),al_get_bitmap_height(background),0,0,width,height,ALLEGRO_FLIP_HORIZONTAL);
@@ -101,15 +95,11 @@ void draw_menu_images (int width, int height, ALLEGRO_BITMAP *background, ALLEGR
 	al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),2*width/10-width/16,5*height/10,width/3,height/9,0);
 	//	Opção 2
 	al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),6*width/10-width/16,5*height/10,width/3,height/9,0);
-	{//	Botões inferiores (desativados)
-		//	Opção 3
-		//al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),2*width/10-width/16,6.5*height/10,width/3,height/9,0);
-		//	Opção 4
-		//al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),6*width/10-width/16,6.5*height/10,width/3,height/9,0);
-	}
+	//	Botão Sound
+	al_draw_scaled_bitmap(guita,0,0,al_get_bitmap_width(guita),al_get_bitmap_height(guita),width-width/10,0,width/18,height/6,0);
 }
 
-void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT *titlefont) {
+void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT *titlefont, float menufontsize, float titlefontsize) {
 
 	//	Título
 	al_draw_text(titlefont,al_map_rgb(255,255,255),width/2,2*height/10,ALLEGRO_ALIGN_CENTER,"Chorao Pro Skater");
@@ -118,10 +108,8 @@ void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT
 	al_draw_text(menufont,al_map_rgb(255,255,255),width/3-width/30,5*height/10+height/35,ALLEGRO_ALIGN_CENTER,"Play");
 	//	Opção 2
 	al_draw_text(menufont,al_map_rgb(255,255,255),2*width/3+width/30,5*height/10+height/35,ALLEGRO_ALIGN_CENTER,"Change Resolution");
-	{//	Botões inferiores (desativados)
-		//	Opção 3
-		//al_draw_text(menufont,al_map_rgb(255,255,255),width/3-width/30,2*height/3+height/80,ALLEGRO_ALIGN_CENTER,"Replay Introduction");
-		//	Opção 4
-		//al_draw_text(menufont,al_map_rgb(255,255,255),2*width/3+width/30,2*height/3+height/80,ALLEGRO_ALIGN_CENTER,"Close");
-	}
+
+	//	Informações
+	al_draw_text(menufont,al_map_rgb(0,0,0),5,height-20,ALLEGRO_ALIGN_LEFT,"Made by: Brayan Silveira and Leonardo Bruxel");
+	al_draw_text(menufont,al_map_rgb(255,255,255),6,height-21,ALLEGRO_ALIGN_LEFT,"Made by: Brayan Silveira and Leonardo Bruxel");
 }

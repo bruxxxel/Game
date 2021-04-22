@@ -5,7 +5,7 @@
 	#include "Libs/Macros.h"
 	#define DEBUG
 	//#define PLACEHOLDER
-	//#define MUTE
+	#define MUTE
 	//#define SLOW_MODE
 
 int main () {
@@ -15,13 +15,13 @@ int main () {
 	int height[2] = {480,700};					//	Definição dos parâmetros da tela
 	int dm = 0;									//	Seleção da resolução
 	double prop = width[dm] / width[0];			//	Constante de proporcionalidade pela resolução
-	int FPS = 60;								//	Quadros por segundo
+	int FPS = 30;								//	Quadros por segundo
 	double refresh = 1/FPS;						//	Frequência de Atualização
 
+	bool played_animation = false;				//	Inicia a animação
 	bool menu = true;							//	Inicia o menu
 	bool game = false;							//	Inicia o jogo
 	bool done = false;							//	Inicia o loop principal
-	bool played_animation = true;				//	Inicia a animação
 	bool music_on = true;						//	Seleciona com ou sem música
 
 	float menufontsize = 15 * prop;				//	Adaptação do tamanho da fonte pela resolução
@@ -33,8 +33,9 @@ int main () {
 	SYSTEM_VARIABLES							//	Declaração de Variáveis do Sistema
 	RESIZEFONT									//	Redefinição das fontes
 
-	//	Criação dos componentes	
-	timer = al_create_timer(1.0 / 60);			//	Criação do Timer
+	//	Criação dos componentes
+	timer = al_create_timer(1.0 / 45);			//	Criação do Timer
+	srand(time(NULL));							//	Cria a "semente" do gerador RNG
 	CREATE_DISPLAY								//	Criação do display e alteração de opções
 	EVENTQUEUE									//	Criação da fila de eventos e definição das fontes de eventos
 	#ifndef MUTE
@@ -48,20 +49,21 @@ int main () {
 		//	Animação
 		if (!played_animation) {
 			play_animation(width[dm],height[dm],choraoirl);
-			played_animation = false;
+			played_animation = true;
 		}
 
+		al_register_event_source(event_queue,al_get_mouse_event_source());
 		//	Loop do Menu
 		while (menu == true) {
-			al_flush_event_queue(event_queue);														//	Limpa a fila de eventos
+			al_clear_to_color(al_map_rgb(0,0,0));													//	Limpa o Buffer
 			draw_menu_images(width[dm], height[dm],menu_background,menu_block,guita);				//	Cria os gráficos das caixas de opções
 			draw_menu_text(width[dm], height[dm], menufont, titlefont, menufontsize, titlefontsize);//	Cria os textos das transmissões
 			#ifdef PLACEHOLDER
 				draw_menu_boxes(width[dm], height[dm]);												//	Mostra as áreas delimitadoras das opções
 			#endif
-			al_flip_display();
-
-			al_wait_for_event(event_queue,&ev);	//	Aguarda evento do mouse ou Timer
+			al_flip_display();																		//	Atualiza o Display
+			al_flush_event_queue(event_queue);														//	Limpa a fila de eventos
+			al_wait_for_event(event_queue,&ev);														//	Aguarda evento do mouse ou Timer
 
 			//	Controle pelo mouse
 			al_get_mouse_state(&mouse_state);
@@ -86,6 +88,7 @@ int main () {
 
 									case 0: {
 									dm++;
+									prop = 2;
 									al_resize_display(display,width[1],height[1]);
 									RESIZEFONT
 									al_wait_for_event(event_queue,&ev);
@@ -94,6 +97,7 @@ int main () {
 
 									case 1: {
 									dm--;
+									prop = 1;
 									al_resize_display(display,width[0],height[0]);
 									RESIZEFONT
 									al_wait_for_event(event_queue,&ev);
@@ -138,7 +142,9 @@ int main () {
 			//	Fechar com Esc.
 			if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 				if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
+					menu = false;
 					done = true;
+					al_flush_event_queue(event_queue);
 					break;
 				}
 			}
@@ -146,74 +152,80 @@ int main () {
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));	//	Limpa o Display
 		}
-		
+		al_unregister_event_source(event_queue,al_get_mouse_event_source());
+
 		al_start_timer(timer);
 		GAME_VARIABLES			//	Declaração de Variáveis do Jogo
+		GAME_IMAGES			//	Definição das imagens do jogo
 		while (game) {
 			al_clear_to_color(al_map_rgb(0,0,0));
 
+			al_wait_for_event_timed(event_queue,&ev,refresh);
+
+			player_xpos++;
+			enemy_draw_time++;
+
+			if (enemy_draw_time >= 101) {
+				switch (enemy_trig) {
+					case true:
+						enemy_trig = false;
+						break;
+
+					case false:
+						enemy_trig = true;
+						break;
+				}
+				enemy_draw_time = 0;
+				enemy_count++;
+				rnd = rand()%3;
+			}
+
+			if (player_ypos == player_init_ypos) {
+				if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+					if (ev.keyboard.keycode == ALLEGRO_KEY_UP) {
+						jump = true;
+					}
+				}
+			}
+
+			JUMP_LOGIC
 			GAME_MATH_LOGIC
+
+			if (enemy_trig == true) {
+				int enemy_xpos = width[dm]-hardness*enemy_draw_time;
+				generate_enemy(enemy_1,enemy_2,enemy_3,enemy_xpos,enemy_ypos,width[dm],height[dm],prop,rnd);
+			}
+			draw_score(menu_block,width[dm],height[dm],prop,titlefont,enemy_count);
+			draw_player(choraoirl,width,height,dm,player_ypos,prop);
 			#ifdef DEBUG
 				DEGUB_SHOW_VARS
 			#endif
-
-			al_flush_event_queue(event_queue);
-			al_wait_for_event(event_queue,&ev);
-
-			jumptime++;
-
-			if (jumptime >= 41) {
-				jump = false;
-				jumptime = 0;
-			}
-			if (jump == false && player_ypos >= 3*(h/4)) {
-				jumptime = 0;
-			}
-			if (jump == true && player_ypos >= 3*(h/4)) {
-				jumptime++;
-			}
-
-			al_flush_event_queue(event_queue);
-			al_wait_for_event_timed(event_queue,&ev,refresh);
-
-			if (player_ypos == 0 && ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_UP) {
-				jump = true;
-			}
-
-			if (ev.type == ALLEGRO_EVENT_KEY_UP && ev.keyboard.keycode == ALLEGRO_KEY_UP) {
-				jump = false;
-				player_init_ypos = player_ypos;
-			}
-
-			al_draw_filled_circle(width[dm]/10,player_ypos,height[dm]/20,al_map_rgb(255,0,255));
-
-			if (ev.type == ALLEGRO_EVENT_TIMER) {
-				al_flush_event_queue(event_queue);
-				al_flip_display();
-			}
 
 			//	Fechar para o Menu com Esc.
 			if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 				if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 					game = false;
 					menu = true;
-					sleep(1);
-					al_flush_event_queue(event_queue);
+					al_clear_to_color(al_map_rgb(0,0,0));
 					break;
 				}
 			}
+
+			al_flush_event_queue(event_queue);
+			al_flush_event_queue(timer_trig);
+			TIMER_FLIP_DISP
 		}
 		al_stop_timer(timer);
 	}
 
 	#ifdef SLOW_MODE
-		//sleep (1);
-	#endif
-	#ifndef MUTE
-		TERMINATE_AUDIO
+		sleep (1);
 	#endif
 	#ifdef PLACEHOLDER
 		TERMINATE_IMAGES
+	#endif
+	#ifndef MUTE
+		TERMINATE_AUDIO
 	#endif
 	TERMINATE
 	return 0;

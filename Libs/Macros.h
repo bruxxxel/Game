@@ -6,14 +6,14 @@
 							al_set_new_display_flags(ALLEGRO_WINDOWED); \
 							al_set_new_display_flags(ALLEGRO_RESIZABLE); \
 							\
-							al_clear_to_color(al_map_rgb(0, 0, 0));	//	Limpa o Display
+							al_clear_to_color(al_map_rgb(0, 0, 0));
 
 #define EVENTQUEUE		    event_queue = al_create_event_queue(); \
+							timer_trig = al_create_event_queue(); \
 							\
 							al_register_event_source(event_queue, al_get_display_event_source(display)); \
 							al_register_event_source(event_queue, al_get_keyboard_event_source()); \
-							al_register_event_source(event_queue, al_get_mouse_event_source()); \
-							al_register_event_source(event_queue, al_get_timer_event_source(timer));
+							al_register_event_source(timer_trig, al_get_timer_event_source(timer));
 
 #define RESIZEFONT			menufontsize = 15 * width[dm] / 640;		/*	Adaptação do tamanho da fonte pela resolução*/ \
 							titlefontsize = 30 * width[dm] / 640;		/*	Adaptação do tamanho da fonte pela resolução*/ \
@@ -23,11 +23,32 @@
 
 #define DEGUB_SHOW_VARS		al_draw_textf(debugfont,al_map_rgb(255,255,255),0,0,0,"player_ypos: %Lf",player_ypos); \
 							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,1*debugfontsize,0,"jumptime: %i",jumptime); \
-							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,2*debugfontsize,0,"jump: %s",jump ?"true":"false"); \
-							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,3*debugfontsize,0,"player_init_ypos: %Lf",player_init_ypos); \
-							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,4*debugfontsize,0,"player_ymovement: %Lf",player_ymovement); \
-							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,5*debugfontsize,0,"f: %Lf",f); \
-							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,6*debugfontsize,0,"rad: %Lf",rad);
+							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,2*debugfontsize,0,"enemy_ypos: %Lf",enemy_ypos); \
+							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,3*debugfontsize,0,"player_ymovement: %Lf",player_ymovement); \
+							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,4*debugfontsize,0,"f: %Lf",f); \
+							al_draw_textf(debugfont,al_map_rgb(255,255,255),0,5*debugfontsize,0,"hardness: %Lf",hardness); \
+							/*al_draw_textf(debugfont,al_map_rgb(255,255,255),0,2*debugfontsize,0,"jump: %s",jump ?"true":"false");*/
+
+#define JUMP_LOGIC			if (jumptime >= 40) { \
+								if (ev.type == ALLEGRO_EVENT_KEY_DOWN) { \
+									if (ev.keyboard.keycode == ALLEGRO_KEY_UP) { \
+										jump = true; \
+									} \
+								} \
+								if (ev.type != ALLEGRO_EVENT_KEY_DOWN) { \
+									jump = false; \
+								} \
+								jumptime = 0; \
+							} \
+							if (jump == true && !(player_ypos > prop*9*(h/(10*prop)))) { \
+								jumptime++; \
+							}
+
+#define TIMER_FLIP_DISP		al_wait_for_event(timer_trig,&ev); \
+							if (ev.type == ALLEGRO_EVENT_TIMER) { \
+								al_flush_event_queue(timer_trig); \
+								al_flip_display(); \
+							}
 
 #define MUSIC(x)        	soundtrack = al_load_audio_stream(x,4,44800);
 

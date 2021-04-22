@@ -53,21 +53,21 @@ int install (void) {
 	return 0;
 }
 
-void play_animation (int width, int height, ALLEGRO_BITMAP *choraoirl) {
-	al_clear_to_color(al_map_rgb(0, 0, 0));
+void play_animation (int width,int height,ALLEGRO_BITMAP *choraoirl) {
+	al_clear_to_color(al_map_rgb(0,0,0));
 	int img_width = al_get_bitmap_width(choraoirl);
 	int img_height = al_get_bitmap_height(choraoirl);
-	for (size_t i = 0; i < width-img_width; i++) {
+	for (size_t i = 0; (i < (width-(3*img_width/2))); i++) {
 		al_draw_scaled_bitmap(choraoirl,0,0,img_width,img_height,0+i,height/10,height/4+i/5,height/2+i/2,0);
 		al_draw_scaled_bitmap(choraoirl,0,0,img_width,img_height,width-(10*img_width/21)-i,height/10,height/4+i/5,height/2+i/2,ALLEGRO_FLIP_HORIZONTAL);
 		al_flip_display();
-		if (i >= width) {
+		if (i >= width/2) {
 			break;
 		}
 	}
 }
 
-void draw_menu_boxes (int width, int height) {
+void draw_menu_boxes (int width,int height) {
 
 	//	Caixa da logo do jogo
 	al_draw_rectangle(width/5,height/10,4*width/5,4*height/10,al_map_rgb(255,0,255),1);
@@ -77,13 +77,15 @@ void draw_menu_boxes (int width, int height) {
 	al_draw_rectangle(8*width/10+width/20,5*height/10,5*width/10+width/20,6*height/10,al_map_rgb(255,0,255),1);	//	Change Character
 
 	//	Caixa das informações do jogo
-	al_draw_rectangle(5,height-5,width/2,height-20,al_map_rgb(255,0,255),1);			//	Info
+	al_draw_rectangle(5,height-5,width/2,height-20,al_map_rgb(255,0,255),1);	//	Info
 
-	//	Caixa da seleção de Som
-	al_draw_rectangle(width-width/10,0,width-width/30,height/6,al_map_rgb(255,0,255),1);//	Sound
+	#ifndef MUTE
+		//	Caixa da seleção de Som
+		al_draw_rectangle(width-width/10,0,width-width/30,height/6,al_map_rgb(255,0,255),1);	//	Sound
+	#endif
 }
 
-void draw_menu_images (int width, int height, ALLEGRO_BITMAP *background, ALLEGRO_BITMAP *menu_block, ALLEGRO_BITMAP *guita) {
+void draw_menu_images (int width,int height,ALLEGRO_BITMAP *background,ALLEGRO_BITMAP *menu_block,ALLEGRO_BITMAP *guita) {
 	
 	//	Fundo
 	al_draw_scaled_bitmap(background,0,0,al_get_bitmap_width(background),al_get_bitmap_height(background),0,0,width,height,ALLEGRO_FLIP_HORIZONTAL);
@@ -95,11 +97,13 @@ void draw_menu_images (int width, int height, ALLEGRO_BITMAP *background, ALLEGR
 	al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),2*width/10-width/16,5*height/10,width/3,height/9,0);
 	//	Opção 2
 	al_draw_scaled_bitmap(menu_block,0,0,al_get_bitmap_width(menu_block),al_get_bitmap_height(menu_block),6*width/10-width/16,5*height/10,width/3,height/9,0);
-	//	Botão Sound
-	al_draw_scaled_bitmap(guita,0,0,al_get_bitmap_width(guita),al_get_bitmap_height(guita),width-width/10,0,width/18,height/6,0);
+	#ifndef MUTE
+		//	Botão Sound
+		al_draw_scaled_bitmap(guita,0,0,al_get_bitmap_width(guita),al_get_bitmap_height(guita),width-width/10,0,width/18,height/6,0);
+	#endif
 }
 
-void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT *titlefont, float menufontsize, float titlefontsize) {
+void draw_menu_text (int width,int height,ALLEGRO_FONT *menufont,ALLEGRO_FONT *titlefont,float menufontsize,float titlefontsize) {
 
 	//	Título
 	al_draw_text(titlefont,al_map_rgb(255,255,255),width/2,2*height/10,ALLEGRO_ALIGN_CENTER,"Chorao Pro Skater");
@@ -112,4 +116,60 @@ void draw_menu_text (int width, int height, ALLEGRO_FONT *menufont, ALLEGRO_FONT
 	//	Informações
 	al_draw_text(menufont,al_map_rgb(0,0,0),5,height-20,ALLEGRO_ALIGN_LEFT,"Made by: Brayan Silveira and Leonardo Bruxel");
 	al_draw_text(menufont,al_map_rgb(255,255,255),6,height-21,ALLEGRO_ALIGN_LEFT,"Made by: Brayan Silveira and Leonardo Bruxel");
+}
+
+void generate_enemy (ALLEGRO_BITMAP *enemy_1,ALLEGRO_BITMAP *enemy_2,ALLEGRO_BITMAP *enemy_3,int x_pos,int y_pos,int width,int height, int prop, int rnd) {
+	int x_scale;
+	int y_scale;
+	int img_width;
+	int img_height;
+
+	switch (rnd) {
+	case 0:
+		x_scale = width/4;
+		y_scale = height/4;
+		img_width = al_get_bitmap_width(enemy_1);
+		img_height = al_get_bitmap_height(enemy_1);
+		al_draw_scaled_bitmap(enemy_1,0,0,img_width,img_height,x_pos,y_pos-(prop*img_height/8),x_scale,y_scale,0);
+		break;
+	
+	case 1:
+		x_scale = width/4;
+		y_scale = height/4;
+		img_width = al_get_bitmap_width(enemy_2);
+		img_height = al_get_bitmap_height(enemy_2);
+		al_draw_scaled_bitmap(enemy_2,0,0,img_width,img_height,x_pos,y_pos-2*(prop*img_height/8),x_scale,y_scale,0);
+		break;
+
+	case 2:
+		x_scale = width/4;
+		y_scale = height/4;
+		img_width = al_get_bitmap_width(enemy_3);
+		img_height = al_get_bitmap_height(enemy_3);
+		al_draw_scaled_bitmap(enemy_3,0,0,img_width,img_height,x_pos,y_pos-2*(prop*img_height/8),x_scale,y_scale,0);
+		break;
+		
+	default:
+		break;
+	}
+}
+
+void draw_score (ALLEGRO_BITMAP *skate,int width,int height,int prop,ALLEGRO_FONT *titlefont,int points) {
+	int img_width = al_get_bitmap_width(skate);
+	int img_height = al_get_bitmap_height(skate);
+	al_draw_scaled_bitmap(skate,0,height/20,img_width,img_height,2*width/6,height/20,2*width/6,img_height/6,0);
+
+	al_draw_textf(titlefont,al_map_rgb(255,255,255),width/2,height/20,ALLEGRO_ALIGN_CENTER,"%i",points/2);
+}
+
+void draw_player (ALLEGRO_BITMAP *choraoirl,int width[],int height[],int dm,value player_ypos, int prop) {
+	
+	#ifdef PLACEHOLDER
+		al_draw_filled_circle(width[dm]/10,player_ypos,height[dm]/20,al_map_rgb(255,0,255));
+	#endif
+	#ifndef PLACEHOLDER
+		int player_w = al_get_bitmap_width(choraoirl);
+		int player_h = al_get_bitmap_height(choraoirl);
+		al_draw_scaled_bitmap(choraoirl,0,0,player_w,player_h,width[dm]/10,player_ypos-(prop*player_h/4),prop*player_w/4,prop*player_h/4,0);
+	#endif
 }

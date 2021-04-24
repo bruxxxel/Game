@@ -48,10 +48,12 @@
 							\
 							player_ymovement = -250*prop*sin(rad*jumptime*M_PI); \
 							player_ypos = player_init_ypos + player_ymovement; \
-							hardness = (15 - (5*sin(enemy_count/(2*M_PI))));
+							/*	hardness = (15 - (5*sin(enemy_count/(2*M_PI)))); */ \
+							hardness = (prop*10) + ((pow((enemy_count),2))/75);
 
 #define GAME_IMAGES			ALLEGRO_BITMAP *enemy_1 = al_load_bitmap("Assets/Images/Camelo.png"); \
 							ALLEGRO_BITMAP *enemy_2 = al_load_bitmap("Assets/Images/Broken_Skate.png"); \
-							ALLEGRO_BITMAP *enemy_3 = al_load_bitmap("Assets/Images/Havan.png");
+							ALLEGRO_BITMAP *enemy_3 = al_load_bitmap("Assets/Images/Havan.png"); \
+							ALLEGRO_BITMAP *choris = al_load_bitmap("Assets/Images/Choris.png");
 
 //  End of File

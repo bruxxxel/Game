@@ -18,9 +18,9 @@ int main () {
 	int FPS = 30;								//	Quadros por segundo
 	double refresh = 1/FPS;						//	Frequência de Atualização
 
-	bool played_animation = false;				//	Inicia a animação
-	bool menu = true;							//	Inicia o menu
-	bool game = false;							//	Inicia o jogo
+	bool played_animation = true;				//	Inicia a animação
+	bool menu = false;							//	Inicia o menu
+	bool game = true;							//	Inicia o jogo
 	bool done = false;							//	Inicia o loop principal
 	bool music_on = true;						//	Seleciona com ou sem música
 
@@ -196,7 +196,7 @@ int main () {
 				generate_enemy(enemy_1,enemy_2,enemy_3,enemy_xpos,enemy_ypos,width[dm],height[dm],prop,rnd);
 			}
 			draw_score(menu_block,width[dm],height[dm],prop,titlefont,enemy_count);
-			draw_player(choraoirl,width,height,dm,player_ypos,prop);
+			draw_player(choris,width,height,dm,player_ypos,prop);
 			#ifdef DEBUG
 				DEGUB_SHOW_VARS
 			#endif

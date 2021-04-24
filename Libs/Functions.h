@@ -170,6 +170,6 @@ void draw_player (ALLEGRO_BITMAP *choraoirl,int width[],int height[],int dm,valu
 	#ifndef PLACEHOLDER
 		int player_w = al_get_bitmap_width(choraoirl);
 		int player_h = al_get_bitmap_height(choraoirl);
-		al_draw_scaled_bitmap(choraoirl,0,0,player_w,player_h,width[dm]/10,player_ypos-(prop*player_h/4),prop*player_w/4,prop*player_h/4,0);
+		al_draw_scaled_bitmap(choraoirl,0,0,player_w,player_h,width[dm]/10,player_ypos-(prop*player_h/6),prop*player_w/6,prop*player_h/6,0);
 	#endif
 }

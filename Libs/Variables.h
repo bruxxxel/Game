@@ -1,3 +1,9 @@
+#define GLOBALS				struct enemy_properties { \
+								int y_max; \
+								int x_min; \
+								int x_max; \
+							};
+
 #define SYSTEM_VARIABLES	ALLEGRO_DISPLAY *display = NULL; \
 							ALLEGRO_TIMER *timer = NULL; \
 							ALLEGRO_TIMER *enemy_timer = NULL; \
@@ -31,11 +37,14 @@
 							int player_xpos = 0; \
 							int enemy_count = 0; \
 							int rnd = 0; \
+							int cldrnd = 0; \
 							\
 							bool jump = false; \
 							bool enemy_trig = false; \
+							bool cloud_trig = true; \
 							\
 							unsigned int enemy_draw_time = 0; \
+							unsigned int cloud_draw_time = 0; \
 							unsigned int jumptime = 0;
 							\
 							value f; \
@@ -48,12 +57,15 @@
 							\
 							player_ymovement = -250*prop*sin(rad*jumptime*M_PI); \
 							player_ypos = player_init_ypos + player_ymovement; \
-							/*	hardness = (15 - (5*sin(enemy_count/(2*M_PI)))); */ \
 							hardness = (prop*10) + ((pow((enemy_count),2))/75);
 
 #define GAME_IMAGES			ALLEGRO_BITMAP *enemy_1 = al_load_bitmap("Assets/Images/Camelo.png"); \
 							ALLEGRO_BITMAP *enemy_2 = al_load_bitmap("Assets/Images/Broken_Skate.png"); \
 							ALLEGRO_BITMAP *enemy_3 = al_load_bitmap("Assets/Images/Havan.png"); \
-							ALLEGRO_BITMAP *choris = al_load_bitmap("Assets/Images/Choris.png");
+							ALLEGRO_BITMAP *choris = al_load_bitmap("Assets/Images/Choris.png"); \
+							ALLEGRO_BITMAP *sol = al_load_bitmap("Assets/Images/Sol.png"); \
+							ALLEGRO_BITMAP *cloud_1 = al_load_bitmap("Assets/Images/Nuvem1.png"); \
+							ALLEGRO_BITMAP *cloud_2 = al_load_bitmap("Assets/Images/Nuvem2.png"); \
+							ALLEGRO_BITMAP *cloud_3 = al_load_bitmap("Assets/Images/Nuvem3.png"); \
 
 //  End of File

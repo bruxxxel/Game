@@ -3,11 +3,11 @@
 	#include "Libs/Functions.h"
 	#include "Libs/Variables.h"
 	#include "Libs/Macros.h"
-	#define DEBUG
-	#define PLACEHOLDER
+	//#define DEBUG
+	//#define PLACEHOLDER
 	#define MUTE
-	GLOBALS
 	//#define SLOW_MODE
+	GLOBALS
 
 int main () {
 
@@ -220,7 +220,7 @@ int main () {
 			enemy_draw_time++;
 			cloud_draw_time++;
 
-			if (cloud_draw_time >= 101) {
+			if (cloud_draw_time >= 30) {
 				switch (cloud_trig) {
 					case true:
 						cloud_trig = false;
@@ -230,7 +230,7 @@ int main () {
 						cloud_trig = true;
 						break;
 				}
-				cloud_trig = 0;
+				cloud_draw_time = 0;
 				cldrnd = rand()%3;
 			}
 
@@ -265,7 +265,7 @@ int main () {
 				generate_enemy(enemy_1,enemy_2,enemy_3,enemy_xpos,enemy_ypos,width[dm],height[dm],prop,rnd);
 			}
 			if (cloud_trig == true) {
-				int cloud_xpos = width[dm]-hardness*cloud_draw_time;
+				int cloud_xpos = width[dm]-prop*30*cloud_draw_time;
 				int cloud_ypos = height[dm]/4;
 				generate_cloud(cloud_1,cloud_2,cloud_3,cloud_xpos,cloud_ypos,width[dm],height[dm],prop,cldrnd);
 			}

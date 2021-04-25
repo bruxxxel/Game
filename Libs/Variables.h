@@ -66,6 +66,6 @@
 							ALLEGRO_BITMAP *sol = al_load_bitmap("Assets/Images/Sol.png"); \
 							ALLEGRO_BITMAP *cloud_1 = al_load_bitmap("Assets/Images/Nuvem1.png"); \
 							ALLEGRO_BITMAP *cloud_2 = al_load_bitmap("Assets/Images/Nuvem2.png"); \
-							ALLEGRO_BITMAP *cloud_3 = al_load_bitmap("Assets/Images/Nuvem3.png"); \
+							ALLEGRO_BITMAP *cloud_3 = al_load_bitmap("Assets/Images/Nuvem3.png");
 
 //  End of File

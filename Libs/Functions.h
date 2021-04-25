@@ -228,7 +228,7 @@ void generate_cloud (ALLEGRO_BITMAP *cloud_1,ALLEGRO_BITMAP *cloud_2,ALLEGRO_BIT
 void draw_score (ALLEGRO_BITMAP *skate,int width,int height,int prop,ALLEGRO_FONT *titlefont,int points) {
 	int img_width = al_get_bitmap_width(skate);
 	int img_height = al_get_bitmap_height(skate);
-	al_draw_scaled_bitmap(skate,0,height/20,img_width,img_height,2*width/6,height/20,2*width/6,img_height/6,0);
+	al_draw_scaled_bitmap(skate,0,0,img_width,img_height,2*width/6,height/40,2*width/6,height/7.5,0);
 
 	al_draw_textf(titlefont,al_map_rgb(255,255,255),width/2,height/20,ALLEGRO_ALIGN_CENTER,"%i",points/2);
 }
